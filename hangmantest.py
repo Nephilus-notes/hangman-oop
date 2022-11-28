@@ -91,19 +91,20 @@ class HangmanTest(unittest.TestCase):
             self.assertEqual(fake_out.getvalue(), 'ma_ _ _ _ a_ \n')
         
     def test_game_over(self):
-        player = Player('Johnny')
-        game = Sacrifice()
-        game.player = player
-        game.choose_secret_word(5)
-        game.reveal_character('b')
-        game.reveal_character('c')
-        game.reveal_character('d')
-        game.reveal_character('e')
-        game.reveal_character('f')
-        game.reveal_character('g')
-        game.reveal_character('h')
         with mock.patch('sys.stdout', new=StringIO()) as fake_out:
-            mock_args = ['no']
+            mock_args = ['charles', 'yes', 'no']
+            player = Player('Johnny')
+            game = Sacrifice()
+            game.player = player
+            game.choose_secret_word(5)
+            game.reveal_character('b')
+            game.reveal_character('c')
+            game.reveal_character('d')
+            game.reveal_character('e')
+            game.reveal_character('f')
+            game.reveal_character('g')
+            game.reveal_character('h')
+        
             with mock.patch('builtins.input') as mocked_input:
                 mocked_input.side_effect = mock_args
                 game.check_wrong_chars()
