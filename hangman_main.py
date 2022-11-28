@@ -147,7 +147,7 @@ __|\  |
             self.display_secret()
             char = self.guess_char()
             self.reveal_character(char)
-            char = self.check_wrong_chars()
+            game_running = self.check_wrong_chars()
             
 
     def choose_secret_word(self, int):
@@ -191,12 +191,12 @@ __|\  |
                     self.player.chars.append(char)
                     guessing = False
                     return char
-                    game_running = False
+
                 elif len(char) == 1 and char not in self.player.wrong_chars:
                     self.player.wrong_chars.append(char)
                     guessing = False
                     return char
-                    guessing = False
+
                 elif len(char) == len(self.secret):
                     if char == self.secret:
                         self.game_won()
@@ -215,7 +215,8 @@ __|\  |
     def check_wrong_chars(self):
         if len(self.player.wrong_chars) >= 7:
             self.game_over()
-            return None
+            return False
+        return True
     
     def reset_game(self):
         self.choose_secret_word(r.randint(1,10))
@@ -227,7 +228,6 @@ __|\  |
         
     def game_over(self):
         print(f"You have lost {self.player.name} and the hanged man sees not another day.")
-        game_running = False
         while True:
             print(self.ascii[8])
             time.sleep(.4)
@@ -243,7 +243,6 @@ __|\  |
 
     def game_won(self):
         print(f"Congratulations, you won! {self.secret.title()} is the secret word.")
-        game_running = False
         self.next_game()
 
     def next_game(self):
